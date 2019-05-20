@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tool="http://www.springframework.org/schema/tool" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd  
+     http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd  
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd  
+     http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool.xsd"
+	default-lazy-init="false" default-autowire="byName">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:cfg/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 获取bean工具注入 
+	<bean id="springContextHolder" class="com.tlan.common.utils.SpringContextHolder"
+		lazy-init="false" />-->
+
+	<!-- BoneCP -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" p:driverClass="${jdbc.driver}" 
+		p:jdbcUrl="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" 
+		p:idleConnectionTestPeriodInMinutes="${bonecp.idleConnectionTestPeriodInMinutes}" 
+		p:idleMaxAgeInMinutes="${bonecp.idleMaxAgeInMinutes}" p:maxConnectionsPerPartition="${bonecp.maxConnectionsPerPartition}" 
+		p:minConnectionsPerPartition="${bonecp.minConnectionsPerPartition}" p:partitionCount="${bonecp.partitionCount}" 
+		p:acquireIncrement="${bonecp.acquireIncrement}" p:statementsCacheSize="${bonecp.statementsCacheSize}" 
+		p:disableConnectionTracking="${bonecp.disableConnectionTracking}" p:releaseHelperThreads="${bonecp.releaseHelperThreads}" 
+		destroy-method="close" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- packagesToScan可以自动搜索某个package的全部标记@Entity class -->
+		<property name="packagesToScan">
+			<list>
+				<value>com.tlan.common.model</value>
+				<value>com.tlan.common.view</value>
+				<value>com.nec.model.survey</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
+				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+
+				<!-- EhCache -->
+				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+				<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">${hibernate.ehcache.configFile}</prop>
+
+				<prop key="hibernate.order_updates">${hibernate.order_updates}</prop>
+				<prop key="hibernate.query.factory_class">${hibernate.query.factory_class}</prop>
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+				<prop key="hibernate.current_session_context_class">${hibernate.current_session_context_class}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager" />
+
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor"
+		p:transactionManager-ref="transactionManager">
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="sync*">PROPAGATION_REQUIRED</prop>
+				<prop key="finish*">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="edit*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="del*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"
+		p:beanNames="*Service,*ServiceImpl" p:interceptorNames="transactionInterceptor" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>  

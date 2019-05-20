@@ -1,0 +1,52 @@
+user:
+	getUserInfo()
+		-获取用户信息
+	sendUserSMSValidatorCode()
+		-给用户发送手机验证码
+	addUserInfo()
+		-param: 参考 module
+		-添加一个用户
+	addUserCar()
+		-param: openId
+		-param: carVin
+		-param: carNumberPfx
+		-param: carNumber
+		-param: carBelongProject
+		-param: carStatus	//没有的参数可以不加
+		-添加用户车辆信息
+	upgradeUser()
+		-param: openId
+		-升级客户为高级会员
+		
+dealer:
+	getAllDealerAddressProvinces()
+		param: gzh_hash
+		-获取销售店的所有省份
+	getAllDealerAddressCitiesByProvince
+		param: province_guid
+		param: gzh_hash
+		-获取所有城市BY省ID
+	getAllListByCity(city_code)
+		param: gzh_hash
+		param: city_code
+		-取得所有dealerByCityCode
+		
+yuyue:
+	addYuyueShijia()
+		param: CarTypeGuid
+		param: CarTypeName	
+	addYuyueWeiXiuBaoYang()
+		param: 
+	addYuyueNianShen()
+		param
+	getAllYuyueList()
+		param: yuyue_type 1:预约试驾 2:预约维修保养 3:预约年审 or 不传值
+	
+			
+car:
+	getCarType()
+		-
+		
+
+
+			

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<!-- 后台配置 -->
+	<package name="admin1" namespace="/admin1" extends="struts-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login" class="com.tlan.interceptor.LoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<!-- <result name="login">/admin/user/login.jsp</result> -->
+			<result name="login">/error.jsp</result>
+		</global-results>
+
+		<!-- 跳转至菜单添加页 -->
+		<action name="forwardAdd" class="com.tlan.admin.menu.WxMenuAction"
+			method="forwardAdd">
+			<result name="success">/admin/menu/select-content.jsp</result>
+			<result name="input">/common/failure.jsp</result>
+
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 跳转至菜单添加页 -->
+		<action name="forwardAddChild" class="com.tlan.admin.menu.WxMenuAction"
+			method="forwardAddChild">
+			<result name="success">/admin/menu/select-content.jsp</result>
+			<result name="input">/common/failure.jsp</result>
+
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 跳转至模块设置页 -->
+		<action name="forwardAddModule" class="com.tlan.admin.module.ModuleAction"
+			method="forwardAddModule">
+			<result name="success">/wx/choiceModules/add-module.jsp</result>
+			<result name="input">/common/failure.jsp</result>
+
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 跳转至模块设内容置页 -->
+		<action name="forwardEditModule" class="com.tlan.admin.module.ModuleAction"
+			method="forwardEditModule">
+			<result name="success">/wx/choiceModules/add-module-content.jsp
+			</result>
+			<result name="input">/common/failure.jsp</result>
+
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<action name="forwardShowMessage" class="com.tlan.admin.message.RuleAction"
+			method="forward">
+			<result name="success">/admin/rule/show-${type}.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<action name="forwardSortPage" class="com.tlan.admin.message.WxMenuAction"
+			method="forwardSortPage">
+			<result name="success">/admin/menu/sort.jsp</result>
+
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<action name="importData" class="com.tlan.admin.gtmc.ImportHelpTelAction"
+			method="importData">
+			<result name="success">/admin/project/result.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+	</package>
+
+	<package name="export" namespace="/export" extends="struts-default">
+		<action name="export" class="com.tlan.admin.data.WxUserInfoSearchAction"
+			method="export">
+			<result type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename=${filename}</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+	</package>
+
+</struts>    

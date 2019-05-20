@@ -1,0 +1,229 @@
+html,body {
+	/*position:relative;
+	height:100%;*/
+	color: #222;
+	font-family: Microsoft YaHei, Helvitica, Verdana, Tohoma, Arial,
+		san-serif;
+	/*background-color:#f0f0f0;*/
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+
+body>.tips {
+	position: fixed;
+	display: none;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	text-align: center;
+	padding: 20px;
+	width: 200px;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+
+ol,ul {
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+a {
+	color: #000000;
+	text-decoration: none;
+}
+/**/
+h2 {
+	font-size: 16px;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+.content {
+	margin: 10px;
+	text-decoration: none;
+	word-wrap: break-word;
+}
+
+.content p {
+	color: #666666;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.content img {
+	height: auto;
+	max-width: 100%;
+	border: 0 none;
+}
+/*cate4*/
+#cate4 {
+	background-color: #F0EFEF;
+	overflow-x: hidden;
+}
+
+#todayList {
+	display: block;
+	margin: 0 auto;
+}
+
+.todayList li {
+	display: block;
+	color: #222222;
+	border-bottom: 1px solid #DDDDDD;
+	font-weight: bold;
+	/*text-shadow: 0 1px 0 #FFFFFF;*/
+	text-decoration: none;
+	background: #F9F9F9;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	position: relative;
+	/*padding:10px 8px;*/
+	overflow: hidden;
+}
+
+.todayList li.listhome2 a {
+	padding: 15px 30px 15px 8px;
+	background: url("../images/ico-next.png") no-repeat scroll 98% center
+		transparent;
+	background-size: 10px auto;
+}
+
+.todayList li a {
+	padding: 10px 40px 11px 8px;
+	display: block;
+}
+
+.todayList li.only2 a {
+	padding: 10px 40px 9px 15px;
+	display: block;
+}
+
+.todayList li.only3 a {
+	padding: 10px 40px 9px 15px;
+	display: block;
+}
+
+.todayList li.only4 a {
+	padding: 10px 40px 11px 8px;
+	display: block;
+}
+
+.todayList li .img {
+	width: 75px;
+	height: 41px;
+	float: left;
+	margin: 0 10px 0 0;
+	display: inline;
+	overflow: hidden;
+}
+
+.todayList li img {
+	width: 75px;
+	float: left;
+}
+
+.todayList li:hover {
+	background-color: #eeeeee;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.todayList li:active {
+	background-color: #eeeeee;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.todayList li h2 {
+	font-size: 16px;
+	color: #2f2f2f;
+	font-weight: normal;
+	height: 20px;
+	font-weight: normal;
+	line-height: 16px;
+	padding: 0;
+	max-width: 100%;
+	text-overflow: ellipsis;
+	white-space: nowrap !important;
+	white-space: normal;
+	overflow: hidden;
+}
+
+.todayList li.only2 h2 {
+	padding: 6px 0 8px;
+}
+
+.todayList li.only3 h2 {
+	padding: 0;
+}
+
+.todayList li.only4 h2 {
+	padding: 0;
+}
+
+.todayList li p {
+	display: block;
+	font-size: 12px;
+	color: #9C9C9C;
+	line-height: 16px;
+	font-weight: normal;
+	margin-top: 2px 0 0 0;
+	overflow: hidden;
+	text-overflow: ellipsis; /*white-space: nowrap;*/
+	padding-right: 2px;
+}
+
+.todayList li.only3 p {
+	white-space: nowrap;
+}
+
+.todayList li.only4 p {
+	white-space: nowrap;
+}
+
+.todayList li p.onlyheight {
+	height: 16px; /*margin-bottom:5px*/
+}
+
+.todayList li .commentNum {
+	color: #BFBFBF;
+	font-size: 0.75em;
+	padding-right: 5px;
+	text-align: right;
+	font-weight: normal;
+}
+
+.todayList li .icon {
+	margin-top: -6px;
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	height: 14px;
+	width: 14px;
+	background: url(../images/themes/jiantou.png) no-repeat 0 0;
+	background-size: 14px 14px;
+}
+
+.todayList li.border-top-none {
+	border-top: 0px solid #DDDDDD
+}
+
+.todayList li.border-bottom-none {
+	border-bottom: 0px solid #DDDDDD
+}

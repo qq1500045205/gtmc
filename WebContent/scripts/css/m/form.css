@@ -1,0 +1,103 @@
+div { 
+    vertical-align: middle; 
+}
+
+select {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-padding-end: 20px;
+    -moz-padding-end: 20px;
+    -webkit-padding-start: 5px;
+    -moz-padding-start: 2px;
+    background-color: #fff; /* fallback color if gradients are not supported */
+    background-image: url(../images/select-arrow.png); /* For Chrome and Safari */
+    background-image: url(../images/select-arrow.png); /* For old Fx (3.6 to 15) */
+    background-image: url(../images/select-arrow.png); /* For pre-releases of IE 10*/
+    background-image: url(../images/select-arrow.png); /* For old Opera (11.1 to 12.0) */ 
+    background-image: url(../images/select-arrow.png); /* Standard syntax; must be last */
+    background-size: 1em 1em;
+    background-position: 90% 50%;
+    background-repeat: no-repeat;
+    border:1px solid #ccc;
+	border-radius:3px;
+	-webkit-box-shadow: 0 1px 1px rgba(255,255,255,1),0 1px 2px rgba(0,0,0,.1) inset;
+	box-shadow: 0 1px 1px rgba(255,255,255,1),0 1px 2px rgba(0,0,0,.1) inset;
+    color: #555;
+    font-size: inherit;
+    margin: 0;
+    overflow: hidden;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-form .m-form-item{
+	clear:both;
+	margin:10px 0px;
+	height:40px;
+}
+.m-form .m-form-item-header{
+	padding: 3px 10px;
+	background: rgb(233,243,250);
+	margin: 8px 0px 20px 0px;;
+	clear:both;
+	color:#000;
+}
+.m-form .m-label{
+	font-weight:bold;
+	padding-top:4px;
+	padding-left:6px;
+	width: 30%;
+	float: left;
+	display:inline-block;
+}
+.m-form .request:before{
+	content: "*";
+	color:red;
+	font-size:13px;
+}
+.m-form .m-input-box{
+	width: 70%;
+	float: left;
+	display:inline-block;
+	vertical-align:top;
+}
+
+.m-form .m-msg-button{
+	background-color:#ccc;
+	background-image:linear-gradient(to bottom,#eee 0,#ccc 100%);
+	background-image: -webkit-gradient(linear,left 0,left 100%,from(#eee),to(#ccc));
+	background-image: -webkit-linear-gradient(top, #eee 0%, #ccc 100%);
+	background-image: -moz-linear-gradient(top, #eee 0%, #ccc 100%); 
+	border:1px solid #999; 
+	border-radius:3px;
+	box-shadow:0 1px 1px rgba(255,255,255,1),0 1px 1px rgba(255,255,255,.5) inset;
+	-webkit-box-shadow:0 1px 1px rgba(255,255,255,1),0 1px 1px rgba(255,255,255,.5) inset;
+	color:#666;
+	text-shadow:0 1px 0 rgba(255,255,255,1); 
+	width:100%;
+	padding:0;
+	border:0;
+	margin:0; 
+	font-size:14px;
+    font-family: 'Î¢ÈíÑÅºÚ';
+    height:2.6em;
+    line-height:2.6em;
+}
+
+.m-form .m-checkbox{
+	-webkit-transform: scale(1.5,1.5);
+}
+.m-form .m-checkbox-label{
+	cursor:pointer;
+	width: 25px;
+	height: 22px;	
+	display: inline-block;
+	font-size: 18px; 
+	background: url(/gtmc_wx/static-data/images/elegant.png) no-repeat 2px 5px;;
+}
+ 
+ 
+	

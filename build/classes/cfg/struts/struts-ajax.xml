@@ -1,0 +1,902 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<package name="admin" namespace="/admin" extends="json-default">
+
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+
+		<action name="welcome" class="com.tlan.admin.sys.AdminAction"
+			method='welcome'>
+			<result name="success">/admin/welcome.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="login" class="com.tlan.admin.sys.AdminAction"
+			method='login'>
+			<result name="success">/admin/welcome.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="logout" class="com.tlan.admin.sys.AdminAction"
+			method='logout'>
+			<result name="success" type="redirect">http://203.88.200.24/Login.aspx</result>
+		</action>
+
+		<action name="ajxlogin" class="com.tlan.admin.sys.AdminAction"
+			method='login2'>
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 生成后台导航菜单 -->
+		<action name="createMenu" class="com.tlan.admin.sys.WebMenuAction"
+			method="create">
+			<result type="json">
+				<param name="root">jsonObject</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		<!-- 保存后台导航菜单 -->
+		<action name="saveusermemu" class="com.tlan.admin.sys.WebMenuAction"
+			method="saveusermemu">
+			<result type="json">
+				<param name="root">jsonObject</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		<!-- 保存后台导航菜单 -->
+		<action name="getusermenu" class="com.tlan.admin.sys.WebMenuAction"
+			method="getusermenu">
+			<result type="json">
+				<param name="root">jsonObject</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 切换公众号 -->
+		<action name="changeGzh" class="com.tlan.admin.sys.AdminAction"
+			method="changeGzh">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 添加项目 -->
+		<action name="*Project" class="com.tlan.admin.sys.WebProjectAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 保存模块分配 -->
+		<action name="saveAssign" class="com.tlan.admin.module.ModuleAction"
+			method="saveAssign">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<!-- 获取组件页编码和名称 -->
+		<action name="getCodeList" class="com.tlan.admin.sys.StatisticAction"
+			method="getCodeList">
+			<result type="json">
+				<param name="root">jsonObject</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+	</package>
+
+	<package name="ajax" namespace="/ajax" extends="json-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 设为欢迎 -->
+		<action name="welcome" class="com.tlan.admin.message.RuleAction" method="welcome">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<!-- 设置默认回复 -->
+		<action name="setDefault" class="com.tlan.admin.message.RuleAction" method="setDefault">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<!-- 文本编辑器上传文件 -->
+		<action name="kindUploadImage" class="com.tlan.admin.plugins.EditUploadAction"
+			method="uploadImage">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 活动处理 -->
+		<action name="syncData" class="com.tlan.admin.gtmc.GCloudAction"
+			method="syncData">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 活动处理 -->
+		<action name="*Active" class="com.tlan.admin.gtmc.BrandActiveAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 报名表单处理 -->
+		<action name="saveSignForm" class="com.tlan.admin.gtmc.ActiveSignFormAction"
+			method="saveSignForm">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 添加短信模版 -->
+		<action name="*MsgTmp" class="com.tlan.admin.message.TemplateAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 添加webuser -->
+		<action name="addWebuser" class="com.tlan.web.action.WebUserAction"
+			method="addUser">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<action name="deleteWebuser" class="com.tlan.web.action.WebUserAction"
+			method="deleteUser">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		
+		<action name="updateWebuser" class="com.tlan.web.action.WebUserAction"
+			method="updateUser">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		
+
+		<!-- 获取所有webuser -->
+		<action name="getAllUser" class="com.tlan.admin.WebuserAction"
+			method="getAllUser">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 获取所有webuser -->
+		<action name="getAllGzhUser" class="com.tlan.admin.WebuserAction"
+			method="getAllGzhUser">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 添加公共号 -->
+		<action name="addGzh" class="com.tlan.admin.WebGzhAction"
+			method="addGzh">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 删除公共号 -->
+		<action name="delGzh" class="com.tlan.admin.WebGzhAction"
+			method="delGzh">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 获取数据 返回对象 -->
+		<action name="combo" class="com.tlan.admin.data.ComboAction"
+			method="combo">
+			<result type="json">
+				<param name="root">jsonObject</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 获取数据 返回Map对象 -->
+		<action name="griddata" class="com.tlan.admin.data.GriddataAction"
+			method="griddata">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<!-- 根据条件获取数据 返回Map对象 -->
+		<action name="searchdata" class="com.tlan.admin.data.WxUserInfoSearchAction"
+			method="searchdata">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 发布菜单到公众平台 -->
+		<action name="publishMenu" class="com.tlan.admin.menu.SelfMenuAction">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- wx自定义菜单配置 -->
+		<action name="*WxMenu" class="com.tlan.admin.menu.WxMenuAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+
+		<!-- 消息配置 -->
+		<action name="*News*" class="com.tlan.admin.message.MessageAction"
+			method="{1}News{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<action name="deleteMessage" class="com.tlan.admin.message.MessageAction"
+			method="deleteMessage">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<!-- 实例化 动态内容  by 郭靖 -->
+		<action name="instanceDynamicContent" class="com.tlan.admin.message.MessageAction"
+			method="instanceDynamicContent">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 模块配置 -->
+		<action name="*Module*" class="com.tlan.admin.module.ModuleAction"
+			method="{1}{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 删除规则 -->
+		<action name="deleteContent" class="com.tlan.admin.module.ModuleAction"
+			method="deleteContent">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 删除模块 -->
+		<action name="deleteModule" class="com.tlan.admin.module.ModuleAction"
+			method="deleteModule">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 获取来访底图显示的项目信息 -->
+		<action name="getBaiDuMap" class="com.tlan.admin.module.ModuleAction"
+			method="getBaiDuMap">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 保存内容到session -->
+		<action name="saveSession" class="com.tlan.admin.module.ModuleAction"
+			method="saveSession">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 检查关键字是否存在 -->
+		<action name="*Rule" class="com.tlan.admin.message.RuleAction"
+			method="{1}Rule">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 检查关键字是否存在 -->
+		<action name="checkKeyword" class="com.tlan.admin.message.RuleAction"
+			method="checkKeyword">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 删除关键字 -->
+		<action name="deleteKeyword" class="com.tlan.admin.message.RuleAction"
+			method="deleteKeyword">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 一键救援、获取附近销售店列表 -->
+		<action name="getNear" class="com.tlan.admin.gtmc.HelpAction"
+			method="getNear">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- 一键救援、获取用户购车销售店 -->
+		<action name="getUsershop" class="com.tlan.admin.gtmc.HelpAction"
+			method="getUsershop">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- 用户注册 -->
+		<action name="saveWxUserInfo" class="com.tlan.admin.gtmc.WxUserAction " method="saveWxUserInfo">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result> 
+		</action>
+	</package>
+	<!-- 车型相关ajax -->
+	<package name="car" namespace="/car" extends="json-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+
+		<!-- 获取所有车型 -->
+		<action name="getAllCarInfo" class="com.tlan.web.action.car.CarTypeAction"
+			method="getAllCarType">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 获取所有车型 -->
+		<action name="getAllCarType" class="com.tlan.web.action.car.CarTypeAction"
+			method="getAllCarType">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 获取guid 获取车型 -->
+		<action name="getCarType" class="com.tlan.web.action.car.CarTypeAction"
+			method="getCarType">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 获取guid 获取型号（二级车型） -->
+		<action name="getCarModels" class="com.tlan.web.action.car.CarTypeAction"
+			method="getCarModels">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 增加车型 -->
+		<action name="addCarModel" class="com.tlan.web.action.car.CarTypeAction"
+			method="addCarModel">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 删除车型 -->
+		<action name="deleteCarModel" class="com.tlan.web.action.car.CarTypeAction"
+			method="deleteCarModel">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 修改车型 -->
+		<action name="editCarModel" class="com.tlan.web.action.car.CarTypeAction"
+			method="editCarModel">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 通过carTypeGuid获取一条车型信息 -->
+		<!-- 查询车 型号 -->
+ 		<action name="queryCarModel" class="com.tlan.web.action.car.CarTypeAction"
+			method="queryCarModel">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 添加车款 -->
+		<action name="addCarSfx" class="com.tlan.web.action.car.CarAction"
+			method="addCarSfx">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 根据id查询车款 -->
+		<action name="queryCarSfx" class="com.tlan.web.action.car.CarAction"
+			method="queryCarSfx">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 更新车款信息 -->
+		<action name="updateCarSfx" class="com.tlan.web.action.car.CarAction"
+			method="updateCarSfx">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 删除车款信息 -->
+		<action name="deleteCarSfx" class="com.tlan.web.action.car.CarAction"
+			method="deleteCarSfx">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 通过车型获取车款信息 -->
+		<action name="getCarSfxListByModel" class="com.tlan.web.action.car.CarAction"
+			method="getCarSfxListByModel">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 通过车款获取导航信息 -->
+		<action name="getCarNaviListBySfx" class="com.tlan.web.action.car.CarNaviAction"
+			method="getCarNaviListByCarGuid">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 添加导航参数类型 -->
+		<action name="addCarNavi" class="com.tlan.web.action.car.CarNaviAction"
+			method="addCarNavi">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 根据id查询导航参数类型 -->
+		<action name="queryCarNavi" class="com.tlan.web.action.car.CarNaviAction"
+			method="queryCarNavi">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 更新导航参数类型 -->
+		<action name="updateCarNavi" class="com.tlan.web.action.car.CarNaviAction"
+			method="updateCarNavi">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 删除导航参数类型 -->
+		<action name="deleteCarNavi" class="com.tlan.web.action.car.CarNaviAction"
+			method="deleteCarNavi">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 通过公众号获取车型信息 -->
+		<action name="getCarModelList" class="com.tlan.web.action.car.CarTypeAction"
+			method="getCarModelList">
+			<result type='json'>
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 通过公众号获取车型信息数量 -->
+		<action name="getCarModelListCount" class="com.tlan.web.action.car.CarTypeAction"
+			method="getCarModelListCount">
+			<result type='json'>
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 通过导航参数类型id获取参数名称信息 -->
+		<action name="getCarParaListByNavi" class="com.tlan.web.action.car.CarParaAction"
+			method="getCarParaListByNavi">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 添加参数名 -->
+		<action name="addCarPara" class="com.tlan.web.action.car.CarParaAction"
+			method="addCarPara">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 根据id查询参数名 -->
+		<action name="queryCarPara" class="com.tlan.web.action.car.CarParaAction"
+			method="queryCarPara">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 更新参数名信息 -->
+		<action name="updateCarPara" class="com.tlan.web.action.car.CarParaAction"
+			method="updateCarPara">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 删除参数名信息 -->
+		<action name="deleteCarPara" class="com.tlan.web.action.car.CarParaAction"
+			method="deleteCarPara">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 根据carid获取车所有信息 -->
+		<action name="getCarInfoByCarGuid" class="com.tlan.web.action.car.CarNaviAction"
+			method="getCarInfoByCarGuid">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 获取车辆信息 -->
+		<action name="getCarInfo" class="com.tlan.web.action.car.UsedCarValueAction"
+			method="getCarInfo">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 获取车辆全部信息 ， 通过 品牌id和出厂年份 -->
+		<action name="getCarAllInfosByNidAndCcsj" class="com.tlan.web.action.car.UsedCarValueAction"
+			method="getCarAllInfosByNidAndCcsj">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 导入车型信息 -->
+		<action name="importcardata" class="com.tlan.web.action.car.FileUploadCarAction"
+			method="readXlsToInsert">
+			<result name="success">/admin/content/carModel/import-car-data-success.jsp
+			</result>
+			<result name="input">/common/failure.jsp</result>
+			<result name="error">/admin/content/import-car-data-error.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 获取车辆全部信息 ， 通过 vin码 -->
+		<action name="getCarAllInfosByVin" class="com.tlan.web.action.car.UsedCarValueAction"
+			method="getCarAllInfosByVin">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 获取 贷款方案 -->
+		<action name="getAllLoanScheme" class="com.tlan.web.action.car.LoanSchemeAction"
+			method="getAllLoanScheme">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 删除 贷款方案 -->
+		<action name="deleteLoanScheme" class="com.tlan.web.action.car.LoanSchemeAction"
+			method="deleteLoanScheme">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<action name="importLoan" class="com.tlan.web.action.car.LoanSchemeAction"
+			method="importLoan">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 导出答题情况 -->
+		<action name="exportLoan" class="com.tlan.web.action.car.LoanSchemeAction"
+			method="exportLoan">
+			<result type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename=${filename}</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+	</package>
+
+	<!-- 调查问卷相关ajax -->
+	<package name="question" namespace="/question" extends="json-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+
+		<!-- 后台题目 ajax -->
+		<action name="*Question*" class="com.tlan.web.action.question.QuestionAction"
+			method="{1}Question{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 前端题目 ajax -->
+		<action name="*QA*" class="com.tlan.web.action.question.QuestionAction"
+			method="{1}QA{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 导出答题情况 -->
+		<action name="exportAnswer" class="com.tlan.web.action.question.QuestionAction"
+			method="exportAnswer">
+			<result type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename=${filename}</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<!-- 导出答题情况 -->
+		<action name="exportUserAnswer" class="com.tlan.web.action.question.QuestionAction"
+			method="exportUserAnswer">
+			<result type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename=${filename}</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+	</package>
+
+
+	<!-- 查经销商相关ajax by李梦杰 -->
+	<package name="dealerquery" namespace="/dealerquery" extends="json-default">
+		<!-- 经销商 -->
+		<action name="*" class="com.tlan.web.action.dealer.QueryDealersAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- 组件页 -->
+	<package name="page" namespace="/page" extends="json-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+
+		<action name="*" class="com.tlan.admin.page.PageAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+	</package>
+	
+	<!-- 活动促销 -->
+	<package name="prom" namespace="/prom" extends="json-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+
+		<action name="*" class="com.tlan.admin.gtmc.PromotionAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+	</package>
+	
+	<!-- 爱车生活  -->
+	<package name="mannual" namespace="/mannual" extends="json-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 获取爱车养护分类 -->
+		<action name="getMannualType" class="com.tlan.web.action.mannual.MannualtypeAction"
+			method="getMannualType">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- 添加爱车养护分类 -->
+		<action name="addMannualtype" class="com.tlan.web.action.mannual.MannualtypeAction"
+			method="addMannualType">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- 添加爱车养护分类 -->
+		<action name="delMannualtype" class="com.tlan.web.action.mannual.MannualtypeAction"
+			method="delMannualType">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 获取爱车养护内容列表 -->
+		<action name="getMannuallist" class="com.tlan.web.action.mannual.MannualtextAction"
+			method="getMannualList">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 获取爱车养护内容 -->
+		<action name="getMannualtext" class="com.tlan.web.action.mannual.MannualtextAction"
+			method="getMannualText">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 添加爱车养护内容 -->
+		<action name="addMannualtext" class="com.tlan.web.action.mannual.MannualtextAction"
+			method="addMannualText">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- 编辑爱车养护内容 -->
+		<action name="editMannualtext" class="com.tlan.web.action.mannual.MannualtextAction"
+			method="editMannualText">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- 删除爱车养护内容 -->
+		<action name="delMannualtext" class="com.tlan.web.action.mannual.MannualtextAction"
+			method="delMannualText">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+	</package>
+	
+	<!-- 二维码  -->
+	<package name="qrcode" namespace="/qrcode" extends="json-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login"
+				class="com.tlan.interceptor.LoginInterceptor2">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+	
+		<!-- 二维码配置  -->
+		<action name="*" class="com.tlan.web.action.qrcode.QrCodeAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	
+	</package>
+
+</struts>    

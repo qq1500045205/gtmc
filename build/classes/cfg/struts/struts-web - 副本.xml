@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<!-- 微信接入及微信api相关配置 -->
+
+	<package name="web" namespace="/web" extends="json-default">
+
+		<!-- 微信接入 -->
+		<action name="api" class="com.tlan.admin.api.WeixinAction"
+			method="api">
+			<result name="success">/common/empty.jsp</result>
+		</action>
+
+		<!-- 高级接口，授权 -->
+		<action name="forward" class="com.tlan.admin.api.WeixinAction"
+			method="forward">
+			<result name="success">/common/empty.jsp</result>
+		</action>
+		<!-- 高级接口，授权跳转 -->
+		<action name="a" class="com.tlan.admin.api.WeixinAction"
+			method="a">
+			<result name="success">${authUrl}</result>
+		</action>
+
+		<!-- 高级接口，获取openid -->
+		<action name="obtainOpenid" class="com.tlan.admin.api.WeixinAction"
+			method="obtainOpenid">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- add by lijun 转发cr系统的消息给微信用户 begin -->
+		<action name="sendbycr" class="com.tlan.admin.api.WeixinAction"
+			method="sendMessageByCr">
+			<result name="success">/common/empty.jsp</result>
+		</action>
+		<action name="endcr" class="com.tlan.admin.api.WeixinAction"
+			method="clearCRTime">
+			<result name="success">/common/empty.jsp</result>
+		</action>
+		<!-- add by lijun 转发cr系统的消息给微信用户 end -->
+	</package>
+
+	<package name="w" namespace="/w" extends="struts-default">
+		<!-- 高级接口，授权跳转 -->
+		<action name="a" class="com.tlan.admin.api.WeixinAction"
+			method="auth">
+			<result name="success" type="redirect">/wx/cnthtml/${u}</result>
+		</action>
+	</package>
+	
+	<package name="sync" namespace="/sync" extends="json-default">
+		<action name="*" class="com.tlan.web.action.plugins.SyncRecordAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">jsonObject</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- 微信用户相关 -->
+	<package name="user" namespace="/user" extends="json-default">
+		<action name="*User*" class="com.tlan.web.action.WxUserAction"
+			method="{1}{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<action name="getCarInfoFromTact" class="com.tlan.web.action.WxUserAction"
+			method="getCarInfoFromTact">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<action name="syncTactCarInfo" class="com.tlan.web.action.WxUserAction"
+			method="syncTactCarInfo">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<!-- 通过openid获取用户车辆信息 -->
+		<action name="getUCPInfo" class="com.tlan.web.action.WxUserAction"
+			method="getUCPInfo">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- 后台用户相关 -->
+	<package name="webuser" namespace="/webuser" extends="json-default">
+		<action name="getwebuserlist" class="com.tlan.web.action.WebUserAction"
+			method="getwebuserlist">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<action name="getsubwebuserlist" class="com.tlan.web.action.WebUserAction"
+			method="getsubwebuserlist">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+
+		<action name="getUserRight" class="com.tlan.web.action.WebUserAction"
+			method="getUserRight">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	<!-- 销售销相关 -->
+	<package name="dealer" namespace="/dealer" extends="json-default">
+		<!-- (getAll)DealerAddress(Provinces) -->
+		<action name="*DealerAddress*" class="com.tlan.web.action.WxDealerAddressAction"
+			method="{1}{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- (getAll)Dealer(ListByCityCode) -->
+		<!-- <action name="*Dealer*" class="com.tlan.web.action.WxDealerAction" 
+			method="{1}{2}"> <result type="json"> <param name="root">dataMap</param> 
+			</result> </action> -->
+		<!-- (getAll)Dealer(ListByCityCode) -->
+		<action name="getAllDealersByCity" class="com.tlan.web.action.WxDealerAction"
+			method="getAllDealersByCity">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	<!-- 预约相关 -->
+	<package name="yuyue" namespace="/yuyue" extends="json-default">
+		<action name="*Yuyue*" class="com.tlan.web.action.WxYuyueAction"
+			method="{1}{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	<!-- 品牌活动 -->
+	<package name="activity" namespace="/activity" extends="json-default">
+		<action name="*Active" class="com.tlan.web.action.active.ActiveAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	<!-- 违章查询 -->
+	<package name="lllegal" namespace="/lllegal" extends="json-default">
+		<action name="*" class="com.tlan.web.action.lllegal.LllegalQueryAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	<!-- 促销信息 -->
+	<package name="promo" namespace="/promo" extends="json-default">
+		<action name="*" class="com.tlan.web.action.promotion.PromotionAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	<package name="orderhistory" namespace="/orderhistory" extends="json-default">
+		<action name="*" class="com.tlan.web.action.TestAction" method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	<package name="carinfo" namespace="/carinfo" extends="json-default">
+		<action name="*" class="com.tlan.web.action.plugins.CarOwnAction" method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	
+		<!-- 李俊测试  start-->
+	<package name="survey" namespace="/survey" extends="json-default">
+		<action name="init" class="com.nec.action.survey.SurveyAction" method="getQuestion">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="add" class="com.nec.action.survey.SurveyAction" method="addQuestionInfo">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="g" class="com.nec.action.survey.SurveyAction" method="getAnswerList">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="go" class="com.nec.action.survey.SurveyAction" method="getOneAnswer">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="ga" class="com.nec.action.survey.SurveyAction" method="getQAList">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="getAuth" class="com.nec.action.survey.SurveyAction" method="getAuth">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="check" class="com.nec.action.survey.SurveyAction" method="checkOrderno">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="export" class="com.nec.action.survey.SurveyAction" method="exportAnswerList">
+			<result type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename=${filename}</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+	</package>
+	<!-- 李俊测试  end-->
+	<!-- 用户留资相关 -->
+	<package name="artificial" namespace="/artificial" extends="json-default">
+		<action name="*Personal*" class="com.tlan.web.action.artificial.PersonalInfoAction"
+			method="{1}{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="*Suggest*" class="com.tlan.web.action.artificial.PersonalSuggestAction"
+			method="{1}{2}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+    	<!-- 雷凌预购 -->
+	<package name="newcarreserve" namespace="/newcarreserve" extends="json-default">
+		<action name="*NewCarReserve" class="com.nec.web.action.newcarreserve.NewCarReserveAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+	 	<!-- 积分活动 -->
+    <package name="creditactivity" namespace="/creditactivity" extends="json-default">
+           <action name="CreditEnroll*" class="com.nec.web.action.creditactive.WxMemberCreditEnrollAction"
+                  method="{1}">
+                  <result type="json">
+                         <param name="root">dataMap</param>
+                  </result>
+           </action>
+                         <action name="getIntegralActivites" class="com.nec.web.action.creditactive.MemberGetCreditActiveAction"
+                     method="getIntegralActivites">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+              <!-- 验证积分获得方式 -->
+               <action name="getIntegralActivitesCheck" class="com.nec.web.action.creditactive.MemberGetCreditActiveAction"
+                     method="getIntegralActivitesCheck">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+              <!-- 直接获得积分 -->
+               <action name="getIntegral" class="com.nec.web.action.creditactive.MemberGetCreditActiveAction"
+                     method="getIntegral">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+              <action name="getIntegralActivitesByLogin" class="com.nec.web.action.creditactive.MemberGetCreditActiveAction"
+                     method="getIntegralActivitesByLogin">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+                <action name="saveScoreByLogin" class="com.nec.web.action.creditactive.MemberGetCreditActiveAction"
+                     method="saveScoreByLogin">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+              <action name="*CreditActiveInfo" class="com.nec.web.action.creditactive.CreditActiveInfoAction"
+				method="{1}">
+				<result type="json">
+					<param name="root">dataMap</param>
+				</result>
+			</action>
+					<action name="creditActive" class="com.tlan.web.action.creditactive.CreditActiveAction"
+			method="creditActive">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+			<action name="*creditActiveInfo" class="com.tlan.web.action.creditactive.CreditActiveInfoAction"
+			method="{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="listUserCredit" class="com.nec.web.action.creditactive.MemberCreditActiveAction" method="getAllUserCredit">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<action name="listCreditActive" class="com.nec.web.action.creditactive.MemberCreditActiveAction" method="getCreditRecordByUser">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<action name="searchCreditActive" class="com.nec.web.action.creditactive.MemberCreditActiveAction" method="searchCreditRecord">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+				<action name="creditDetail" class="com.nec.web.action.creditactive.CreditActiveDetailAction"
+			method="creditDetail">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		              <action name="getIntegralActivites" class="com.nec.web.action.creditactive.GHSCreditActiveAction"
+                     method="getIntegralActivites">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+              <!-- 验证积分获得方式 -->
+               <action name="getIntegralActivitesCheck" class="com.nec.web.action.creditactive.GHSCreditActiveAction"
+                     method="getIntegralActivitesCheck">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+              <!-- 直接获得积分 -->
+               <action name="getIntegral" class="com.nec.web.action.creditactive.GHSCreditActiveAction"
+                     method="getIntegral">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+<!-- 获得积分注册选项 -->
+              <action name="getIntegralActivitesByLogin" class="com.nec.web.action.creditactive.GHSCreditActiveAction"
+                     method="getIntegralActivitesByLogin">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+<!-- 通过注册获得积分 -->
+                <action name="saveScoreByLogin" class="com.nec.web.action.creditactive.GHSCreditActiveAction"
+                     method="saveScoreByLogin">
+                     <result type="json">
+                            <param name="root">dataMap</param>
+                     </result>
+              </action>
+              		<action name="creditActive" class="com.nec.web.action.creditactive.CreditActiveAction"
+			method="creditActive">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+    </package>
+</struts>    

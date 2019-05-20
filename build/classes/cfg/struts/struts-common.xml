@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<!-- 框架及公用功能配置 -->
+
+	<package name="common" namespace="/common" extends="struts-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="login" class="com.tlan.interceptor.LoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 上传文件 -->
+		<action name="uploadImage" class="com.tlan.admin.plugins.UploadFileAction"
+			method="uploadImage">
+			<result name="success">/common/success.jsp</result>
+			<result name="input">/common/failure.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 验证码 -->
+		<action name="securityCode" class="com.tlan.admin.plugins.SecurityCodeImageAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">imageStream</param>
+				<param name="bufferSize">2048</param>
+			</result>
+		</action>
+
+		<!-- 跳转至菜单添加页 -->
+		<action name="forwardAdd" class="com.tlan.admin.sys.WxMenuAction"
+			method="forwardAdd">
+			<result name="success">/admin/menu/select-content.jsp</result>
+			<result name="input">/common/failure.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 跳转至子菜单添加页 -->
+		<action name="forwardAddChild" class="com.tlan.admin.sys.WxMenuAction"
+			method="forwardAddChild">
+			<result name="success">/admin/menu/select-content.jsp</result>
+			<result name="input">/common/failure.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 跳转至模块设置页 -->
+		<action name="forwardAddModule" class="com.tlan.admin.sys.ModuleAction"
+			method="forwardAddModule">
+			<result name="success">/admin/choiceModules/add-module.jsp</result>
+			<result name="input">/common/failure.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<!-- 跳转至模块设内容置页 -->
+		<action name="forwardEditModule" class="com.tlan.admin.sys.ModuleAction"
+			method="forwardEditModule">
+			<result name="success">/admin/choiceModules/add-module-content.jsp
+			</result>
+			<result name="input">/common/failure.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+
+		<action name="forwardShowMessage" class="com.tlan.admin.message.RuleAction"
+			method="forward">
+			<result name="success">/admin/rule/show-${type}.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+		
+		<action name="forwardSortPage" class="com.tlan.admin.menu.WxMenuAction"
+			method="forwardSortPage">
+			<result name="success">/admin/menu/sort.jsp</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+	</package>
+
+
+</struts>    
